@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title></title>
+</head>
+<body>
+    <form action="/updateBoard" method="post">
+    <!-- 수정 못하게 하는 거  readonly:입력은 안되지만 데이터는가져간다/ disabled:입력도 안되고,데이터 아예 안 넘어감-->
+    글번호: <input type="text" name="boardNum" th:value="${board.boardNum}" readonly > <br>
+    제목: <input type="text" name="boardTitle" th:value="${board.boardTitle}" > <br>
+    작성자: <input type="text" name="writer" th:value="${board.writer}"  readonly> <br>
+    작성일: <input type="text" name="createDate" th:value="${board.createDate}" readonly> <br>
+    내용: <textarea name="boardContent" cols="30" rows="10">[[${board.boardContent}]]</textarea> <br>
+    <input type="submit" value="수정">
+  </form>
+
+</body>
+</html>

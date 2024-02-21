@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+
+<!-- 감싸고 있는 태그가 부모태그 
+ex) td의 부모는 tr/ tr의 부모는 table table의 자식 세개
+    td형제 태그는 td -->
+                                  
+
+    <table id="my-table">
+        <tbody>
+        <tr>
+            <td>1</td>
+            <td><input type="text" value="1"></td>
+        </tr>
+        <tr id="my-tr">
+            <td>2</td>
+            <td><input type="text" value="2"></td>
+        </tr>
+        <tr>
+            <td>3</td>
+            <td><input type="text" value="3"></td>
+        </tr>
+    </tbody>
+    </table>
+
+    <script>
+        //id 속성이 my-table인 태그의 자식 태그 선택    
+        const tableTag= document.querySelector('#my-table');
+        
+        
+        //자식 태그 접근
+        console.log(tableTag.children); //복수 자식들 전부(배열)
+       // console.log(tableTag.children[0]); //자식들 중 0번째
+
+        
+        //테이블 태그의 자식의 자식 태그 선택(tr태그들)
+        console.log(tableTag.children[0].children); //1번째는 tbody tbody는 tr 세개
+        //console.log(tableTag.children[0].children[0]); //1번째는 tbody tbody중 첫번째 tr
+
+        //부모 태그에 접근
+        const trTag =document.querySelector('#my-tr')
+        console.log(trTag.parentElement);// 부모는 하나, tr의 부모는 tbody
+        console.log(trTag.parentElement.parentElement);//tr태그의 부모의 부모
+        
+
+        //형제 태그 선택 
+
+
+    </script>
+
+
+</body>
+</html>

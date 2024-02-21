@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{fragment/main_layout}">
+
+<th:block layout:fragment="content_css">
+    <!-- html 파일이 열릴 때 같이 실행되는 CSS -->
+    <!-- <link rel="stylesheet" href="/"> -->
+</th:block>
+
+
+<th:block layout:fragment="contentFragment">
+    <!-- html 코드 작성 -->
+    <div class="row">
+        <div class="col">
+            -차량등록
+        </div>
+    </div>
+
+    <form action="/carManage" method="post">
+    <div class="row">
+        <div class="col">
+            제조사
+        </div>
+        <div class="col">
+            <select name="carBrand" class="form-select" aria-label="Default select example">
+                <option value="현대" selected>현대</option>
+                <option value="기아">기아</option>
+                <option value="쌍용">쌍용</option>
+            </select>
+        </div>
+        <div class="col">
+            모델명
+        </div>
+        <div class="col">
+            <div class="input-group input-group-sm mb-3">
+                <input name="modelName" type="text" class="form-control" aria-label="Sizing example input"
+                    aria-describedby="inputGroup-sizing-sm">
+            </div>
+        </div>
+        <div class="col">
+            차량가격
+        </div>
+        <div class="col">
+            <div class="input-group input-group-sm mb-3">
+                <input name="carPrice" type="text" class="form-control" aria-label="Sizing example input"
+                    aria-describedby="inputGroup-sizing-sm">
+            </div>
+        </div>
+        <div class="col">
+            <input type="submit" value="등록">
+        </div>
+    </div>
+    </form>
+
+
+
+
+    <div class="row">
+        
+        <div class="col">
+            -차량목록
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <colgroup>
+                <col width="20%">
+                <col width="40%">
+                <col width="40%">
+
+            </colgroup>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <td>모델번호</td>
+                        <td>모델명</td>
+                        <td>제조사</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each=" car :${carList}">
+                        <td>[[${car.carName}]]</td>
+                        <td>1232132</td>
+                        <td></td>
+                    </tr>
+                </tbody>
+               
+
+            </table>
+        </div>
+    </div>
+
+</th:block>
+
+<th:block layout:fragment="content_js">
+    <!-- html 파일이 열릴 때 같이 실행되는 JS -->n
+    <!-- <script src="/"></script> -->
+</th:block>
+
+</html>
+

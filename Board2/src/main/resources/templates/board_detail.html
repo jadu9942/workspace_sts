@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title></title>
+</head>
+<body>
+글번호 : [[${board.boardNum}]] <br>   
+제목 : [[${board.title}]] <br>
+작성자 : [[${board.writer}]] <br>
+작성일 : [[${board.createDate}]] <br>
+조회수 : [[${board.readCnt}]] <br>
+내용 : [[${board.content}]] <br>
+<!-- 수정, 삭제 글 작성자이거나, 로그인한 사람이 관리자 일때만 -->
+<input type="button" value="뒤로가기" onclick="history.back(-1)">
+<!--  자바스크립트(페이지에서 뒤로가기 버튼과 동일한 기능-원래 상태로 복원됨) 뒤로가기(한칸)history.back(-1)  -->
+<input type="button" value="뒤로가기" onclick="location.href='/board/list'"> 
+                                                                            <!--페이지 새로고침 원리 -->
+                                                                            <!-- 둘 중 location.href= 추천  -->
+    <th:block th:if="${session.loginInfo != null}">
+    <th:block th:if="${session.loginInfo.memberId == board.writer or session.loginInfo.isAdmin == 'Y'}">
+        <input type="button" value="수정하기">
+        <input type="button" value="삭제하기" th:onclick="goDelete([[${board.boardNum}]])">
+                                        <!--  자바 스크립트 대괄호 까지 넣어주기 -->
+        <!-- html 문법 -->
+    </th:block>
+</th:block> <br>
+
+
+<div>
+    <form action="/reply/regReply" method="post">
+        <input type="hidden" name="boardNum" th:value="${board.boardNum}">
+        <input type="text" name="content">
+        <input type="submit" value="등록">
+    </form>
+</div>
+
+<div th:each="reply: ${replyList}">
+    <!--  자료형 replyVO -->
+<!-- 작성자 작성일 내용 -->
+    <div>[[${reply.writer}]]</div>
+    <div>[[${reply.createDate}]]</div>
+    <div>[[${reply.content}]]</div>
+
+</div>
+
+
+<script>
+    // 변수선언 
+    //자바int a; 자바 스크립트도 동일 but 자료형 다름 
+    // 아래 세개 종류가 끝 자바 스크립트는 자료형이 없음(내부적으로 만들어짐)
+   // 자바스크립트는 정수형 문자열 구분없이 자료형 사용 자료형 외울 필요 없음
+    var a; //기존에 쓰던 변수 선언 문법
+    var aa=10;  
+    var bb='java'; 
+    //추천하는 방식(새로운 문법)
+    const b=10;   // 변하지 않는 값을 저장할 때는 const 사용 
+    //b=20;      ->오류 발생 이미 b에는 10이 저장되어있는데 변할 수 없음
+    let c=10;    //변하는 값을 저장할 때는 let 사용 변하는 데이터 저장할 때 쓰면된다(항상 데이터 변동있어야 하는 것 아님)  
+    c=20;       //오류 없음 사용 가능
+
+        const name='홍';
+        const num1=10;
+        const num2=20;
+        //출력문 페이지에서 F12 console창 보기
+        console.log('안녕하세요');
+        console.log(name+'이라는 사람은 국어점수가'+num1+'영어점수가 '+num2)+'입니다';
+        //빽틱 `` 
+        console.log(`${name}이라는 사람은 국어점수가 ${num1} 영어점수가 ${num2}입니다`); //물결  
+
+
+    //               goDelete()
+    // 자바 스크립트 매개변수 칸에 자료형 쓸 필요 없음 어차피 구분 없이 쓰는 자료형이기 때문에
+    function goDelete(boardNum){
+        
+        location.href=`/board/delete?boardNum=${boardNum}`;
+       // location.href='/board/delete/boardNum='+boardNum;
+        //              문자열이기 때문에 '' +
+        // 쿼리에서 실행할 글번호 데이터 가져가줘야함(삭제위해)
+
+    }
+</script>
+</body>
+</html>
+
+
+<!-- 자바에서 메소드 쓸 때 메소드 선언은 자바스크립트의 함수선언과 동일 실제로 자바에서 이 메소드 쓰려면 정수 데이터 필요하면
+     정수 데이터 넣어준다  -->

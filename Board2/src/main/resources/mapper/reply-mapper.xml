@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 해당 파일에 모든 쿼리문을 작성 -->
+<mapper namespace="replyMapper">
+    <resultMap id="reply" type="com.green.Board2.vo.ReplyVO">
+        <result column="REPLY_NUM"    property="replyNum"/>
+        <result column="CONTENT"      property="content"/>
+        <result column="CREATE_DATE"  property="createDate"/>
+        <result column="WRITER"       property="writer"/>
+        <result column="BOARD_NUM"    property="boardNum"/>
+
+
+    </resultMap>
+
+    <insert id="replyInput">
+<!--       replyNum x-> AUTO_INCREMENT 자동으로 댓글 번호 만들어줄 것이기 때문에 작성x-->
+<!--        createDate X DEFAULT CURRENT_TIMESTAMP 자동으로 현재 시간 넣어줌 -->
+        INSERT INTO BOARD_REPLY(
+         CONTENT
+        , WRITER
+        , BOARD_NUM
+        )
+
+        VALUES(
+        #{content}
+        ,#{writer}
+        ,#{boardNum}
+        )
+
+    </insert>
+
+    <select id="replySelect" resultMap="reply">
+        SELECT
+        WRITER
+        ,CREATE_DATE
+        ,CONTENT
+        ,REPLY_NUM
+<!--   REPLY_NUM(pk)-댓글 삭제 수정할 때 없으면 기능 안됨 -->
+        FROM BOARD_REPLY
+        WHERE BOARD_NUM= #{boardNum}  <!--몇번 글(boardNum)의 대한 댓글 내용(writer, createDate, content)을 조회-->
+
+
+    </select>
+
+<!--    <delete id="">-->
+<!--        DELETE-->
+
+<!--    </delete>-->
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

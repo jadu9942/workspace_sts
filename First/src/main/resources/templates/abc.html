@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+abc.html 파일입니다 <br>
+<div th:text="${score}"></div>
+<span th:text="${score}"></span>
+<!-- tht치면 자동완성 나옴 -->
+<!-- div나 span이나 어떤 태그나 쓸 수 있음 
+태그쓰기 귀찮으면 아래 대괄호방식으로 쓸 수 있음 -->
+[[${score}]]
+
+<form action="">
+ <input type="hidden" th:value="${score}">
+
+
+</form>
+
+
+</body>
+</html>

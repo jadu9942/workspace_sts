@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{fragment/main_layout}" >
+
+<th:block layout:fragment="content_css">
+    <!-- html 파일이 열릴 때 같이 실행되는 CSS -->
+    <!-- <link rel="stylesheet" href="/"> -->
+</th:block>
+
+<th:block layout:fragment="contentFragment">
+    <!-- html 코드 작성 -->
+
+    <form action="/carList" method="post">
+        <div class="row">
+            <div class="col align-middle text-center">
+                <table class="table table-borderless" style="margin-top: 10%;">
+                    <tr>
+                        <td>
+                            구매자명
+                        </td>
+                        <td>
+                            <input name="customerName" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>색상</td>
+                        <td>
+                            <select name="carColor" class="form-select" aria-label="Default select example">
+                                <option value="블랙" selected>블랙</option>
+                                <option value="화이트">화이트</option>
+                                <option value="실버">실버</option>
+                                <option value="레드">레드</option>
+                            </select>
+                        </td>
+                        <td>모델</td>
+                        <td>
+                            <select name="modelNumber" class="form-select" aria-label="Default select example">
+                                <option th:value="${car.modelNumber}" th:each="car:${carList}">
+                                    [[${car.modelName}]]
+                                </option>
+                            </select>
+                        
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>연락처</td>
+                        <td>
+                            <input name="customerTel" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+                        </td>
+                    </tr>
+                </table>
+                <input type="submit" value="등록">
+            </div>
+        </div>
+    
+    </form>
+
+
+</th:block>
+
+<th:block layout:fragment="content_js">
+    <!-- html 파일이 열릴 때 같이 실행되는 JS -->
+    <!-- <script src="/"></script> -->
+</th:block>
+</html>

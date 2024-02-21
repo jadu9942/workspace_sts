@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{fragment/main_layout}" >
+
+<th:block layout:fragment="content_css">
+    <!-- html 파일이 열릴 때 같이 실행되는 CSS -->
+    <!-- <link rel="stylesheet" href="/"> -->
+</th:block>
+
+
+
+<th:block layout:fragment="contentFragment">
+    <!-- html 코드 작성 -->
+
+    <div class="row" style="margin-top: 10%;">
+        <div class="col table">
+            <table class="table table-bordered">
+                <tr>
+                    <td rowspan="2">NO.</td>
+                    <td colspan="4" style="text-align: center;">구매자 정보</td> 
+                    <td colspan="2" style="text-align: center;">차량정보</td>
+                </tr>
+                <tr>
+                    
+                    <td>구매자명</td>
+                    <td>연락처</td>
+                    <td>구매일</td>
+                    <td>색상</td>
+                    <td>모델명</td>
+                    <td>금액</td>
+                </tr>
+                <tr th:each=" listCar, state :${list}">
+                    <td>[[${state.count}]]</td>
+                    <td>[[${listCar.customerName}]]</td>
+                    <td>[[${listCar.customerTel}]]</td>
+                    <td>[[${listCar.saleDate}]]</td>
+                    <td>[[${listCar.carColor}]]</td>
+                    <td>[[${listCar.modelName}]]</td>
+                    <td>[[${listCar.carPrice}]]</td>
+                </tr>
+                
+            </table>
+        </div>
+    </div>
+
+
+</th:block>
+
+
+
+
+<th:block layout:fragment="content_js">
+    <!-- html 파일이 열릴 때 같이 실행되는 JS -->
+    <!-- <script src="/"></script> -->
+</th:block>
+
+
+</html>

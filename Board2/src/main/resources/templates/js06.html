@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <input type="button" value="버튼" id="btn" > <br>
+    <input type="text" id="my-input" >
+
+
+
+
+    <Script>
+        //이벤트 처리(태그 가지고 와야함)
+        //클릭할 때마다
+        const btn=document.querySelector('#btn');
+        btn.addEventListener('click',function (){
+            alert(1111);
+        }); 
+        //이벤트가 잘 발생하는지 듣고 있겠다
+        
+
+//input 태그에 키보드로 값을 입력할 때마다 
+//입력한 값을 console에 출력 시키는 이벤트 코드를 작성
+        const myInput=document.querySelector('#my-input');
+        myInput.addEventListener('keyup',function(){
+            console.log(myInput.value);
+        })
+
+
+    </Script>
+    <!-- 자바 스크립트 오류는 개발자console봐야 함 -->
+</body>
+</html>

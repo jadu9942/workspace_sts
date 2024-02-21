@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 해당 파일에 모든 쿼리문을 작성 -->
+<mapper namespace="carMapper">
+
+<!--  차량 등록-->
+	<insert id="insertCar">
+        INSERT INTO car_info(
+        CAR_BRAND
+        , MODEL_NAME
+        , CAR_PRICE
+        )
+        VALUES(
+        #{carBrand}
+        ,#{modelName}
+        ,#{carPrice}
+        );
+    </insert>
+
+
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title></title>
+<style>
+
+    .container{
+        width: 600px;
+        margin:0 auto;
+    }
+
+    table{
+        border: 1px solid black; 
+        width:100%;
+        border-collapse: collapse;
+    }
+
+    tr, td{
+        border: 1px solid black;
+    }
+    .btn-div{
+        text-align: center;
+        margin-top: 16px;
+    }
+
+</style>
+</head>
+<body>
+    
+
+    <div class="container">
+    <table>
+        <tr>
+            <td>학번</td>
+            <td>학생명</td>
+            <td>국어점수</td>
+            <td>영어점수</td>
+            <td>총점</td>
+        </tr>
+        <!-- 특정한 문법 쓸 수 있도록 만들어줌th:block  -->
+        <!--th:each="" 반복문  리스트에서 하나씩 뺀 것 >학생 한명(StuVO)을 student라고 정함 : 반복을 뭐로 돌릴래 
+        tr이 학생 하나 그럼 학생 여러명 반복 돌리면 되니까 (stuList에는 StuVO가 여러 개 들어있음) 
+        -->
+        <th:block th:each="student:${stuList}">
+            <tr>
+                <td>[[${student.stuNo}]]</td>
+                <td>
+                    <!-- 학생상세정보화면으로 이동 -->
+                   <a th:href="@{stuDetail(stuNo=${student.stuNo})}"> [[${student.stuName}]]</a>
+                </td>
+                <td>[[${student.korScore}]]</td>
+                <td>[[${student.engScore}]]</td>
+                <td>[[${student.korScore + student.engScore}]]</td>
+                <!-- 중괄호 안에 써야 연산되어서 출력됨 -->
+                
+<!-- 하나씩 데이터 뽑아서student를 반복 -->
+            </tr>
+        </th:block>
+        
+        
+    </table>
+    <div class="btn-div">
+        <input type="button" value="학생등록" onclick="goReg()">
+        <!-- <button type="button">학생등록</button> -->
+    </div>
+</div>
+
+    <script>
+       function goReg(){
+        location.href= 'regStu';
+        
+       }
+
+    </script>
+</body>
+</html>
