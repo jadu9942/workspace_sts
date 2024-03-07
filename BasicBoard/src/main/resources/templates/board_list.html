@@ -25,6 +25,7 @@
 <body>
 <div class="container">
     <div>
+<<<<<<< HEAD
         <th:block th:if="${session.loginInfo == null}">
             <a href="/loginForm">Login</a>
             <a href="/joinForm">Join</a>
@@ -33,6 +34,22 @@
             [[${session.loginInfo.memberId}]]님 안녕
             <a href="/logout">Logout</a>
     </th:block>
+=======
+        <th:block sec:authorize="isAnonymous()">
+            <a href="/loginForm">Login</a>
+            <a href="/joinForm">Join</a>
+        </th:block>
+        <th:block sec:authorize="isAuthenticated()">
+            [[${#authentication.name}]]
+            <a href="/logout">Logout</a>
+    </th:block>
+
+
+    <a href="/manager" sec:authorize="hasRole('ROLE_MANAGER')">매니저 전용</a> 
+    <a href="/admin" sec:authorize="hasRole('ROLE_ADMIN')">관리자 전용</a> 
+
+    <a href="/sample">security 사용을 위한 html 문법</a> 
+>>>>>>> 9b1e33564e4cf34fc4ddf00d2aa022056a783923
     </div>
     <table>
         <thead>

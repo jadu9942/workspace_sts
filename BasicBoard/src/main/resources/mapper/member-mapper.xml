@@ -24,6 +24,7 @@
         , #{memberPw}
         )
     </insert>
+<<<<<<< HEAD
 <!--    로그인-->
     <select id="login" resultMap="member">
         SELECT
@@ -33,6 +34,16 @@
         FROM SECURITY_MEMBER
         WHERE MEMBER_ID=#{memberId}
         AND MEMBER_PW=#{memberPw}
+=======
+<!--   security에게 로그인에 필요한 정보를 전달하기 위한 조회-->
+    <select id="login" resultMap="member">
+        SELECT
+        MEMBER_ID
+        , MEMBER_PW
+        , MEMBER_ROLL
+        FROM SECURITY_MEMBER
+        WHERE MEMBER_ID=#{memberId}
+>>>>>>> 9b1e33564e4cf34fc4ddf00d2aa022056a783923
     </select>
 
 

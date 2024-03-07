@@ -46,7 +46,12 @@ public class BoardServiceImpl implements BoardService{
     }
 
     @Override
+<<<<<<< HEAD
     public MemberVO login(MemberVO memberVO) {
         return sqlSession.selectOne("memberMapper.login",memberVO);
+=======
+    public MemberVO login(String memberId) {
+        return sqlSession.selectOne("memberMapper.login",memberId);
+>>>>>>> 9b1e33564e4cf34fc4ddf00d2aa022056a783923
     }
 }

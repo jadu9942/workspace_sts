@@ -21,7 +21,11 @@ function getDetail(itemCode){
         //컨트롤러로 전달할 데이터
         body: new URLSearchParams({
            // 데이터명 : 데이터값
+<<<<<<< HEAD
            'itemCode':itemCode
+=======
+            'itemCode':itemCode
+>>>>>>> 9b1e33564e4cf34fc4ddf00d2aa022056a783923
         })
     })
     .then((response) => {
