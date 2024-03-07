@@ -1,0 +1,62 @@
+
+.container{
+    width:90%;
+    margin:0 auto;
+    border: 1px solid black;
+    border-collapse: collapse;
+    text-align: center; 
+    /* 글자 기준 어떤 건 되고 어떤 건 안됨 여기서는 table이 안됨 */
+}
+
+/* > :자식 찾아가겠다 */
+
+/* ' ': (공백) 자손태그 */
+/* EX) .container tr */
+/* 디자인을 해줄 태그를 선택해야 함 class->. id->#  */
+
+/* >: 자식 태그  */
+.container > tbody > tr, .container > tbody >tr > td {
+    border:1px solid black;
+    height: 500px;
+    vertical-align: top;
+    
+}
+#stu-list-table{
+    border: 1px solid black;
+    border-collapse: collapse;
+    width:90%;
+    margin:0 auto;
+}
+#stu-list-table tr, #stu-list-table td{
+    border: 1px solid black;
+}
+#stu-list-table tr:hover{
+    /* :hover : 마우스 올리면 그때 ~하겠다 */
+    background-color: #dddddd;
+}
+
+.stu-detail-div table{
+    width: 90%;
+    margin:0 auto;
+    border:1px solid black;
+    border-collapse: collapse;
+    text-align: center;
+}
+
+.stu-detail-div table tr, .stu-detail-div table td{
+    border:1px solid black;
+}
+
+/* div 자식 중에 첫번째 그리고 마지막은 last-child/  */
+.stu-detail-div >div:first-child{
+    margin-bottom: 30px;
+
+}
+#name-span:hover{
+    cursor: pointer;
+    /* 커서 올리면 손모양으로 바뀜*/
+}
+
+.scoreInput{
+    width: 40px;
+}

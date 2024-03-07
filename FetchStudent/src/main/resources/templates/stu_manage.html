@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+      <link rel="stylesheet" href="/stu_manage.css">
+      <!--  rel값은 고정 /css 파일로 -->
+   
+</head>
+<body>
+    
+<table class="container">
+    <colgroup>
+        <!-- 컬럼 개수만큼  -->
+        <col width="50%">
+        <col width="50%">
+    </colgroup>
+    <tbody>
+     <tr>
+        <td>
+            <div>
+                <div>
+                    <!-- <select onchange="goSelect()" id="class-selector">  기존방식-->
+                    <select onchange="fetchSelect()" id="class-selector">
+                        <!-- onchange 값이 바뀔 때 -->
+                        <option value="0" th:selected="${stuVO.classCode==0}">전체</option>
+                        <!-- value 써주지 않으면 전체라는 글자가 넘어가서 오류발생 -->
+                        <th:block th:each="classInfo: ${classList}">
+                            <!--classInfo: classvo  -->
+                        <option th:value="${classInfo.classCode}" th:selected="${stuVO.classCode==classInfo.classCode}" >[[${classInfo.className}]]</option>
+                        <!-- 학급명-> select박스에서 보이는 것 / 학급 코드를 value로 가져가야함 -->
+                        <!-- th:selected="" -> ""안에 참이면 실행 거짓이면 실행x -->
+                    </th:block>
+                    </select>
+                </div>
+                <div>
+                    <table id="stu-list-table">
+                        <colgroup>
+                            <col width="10%">
+                            <col width="30%">
+                            <col width="10%">
+                            <col width="*">
+                        </colgroup>
+                        <thead>
+                            <tr>
+                                <td>NO</td>
+                                <td>반이름</td>
+                                <td>학번</td>
+                                <td>학생명</td>
+                            </tr>
+                        </thead>
+                        <tbody >
+                            <!-- 반복이 돌 수 있는 상태 -->
+                            <tr th:each="stuInfo, state :${stuList}">
+                                <td>[[${#lists.size(stuList)-state.index}]]</td>
+                                <!-- thymeleaf_기본문법정리 찾아보기 whole size -index 중괄호 안에 넣으면 연산됨-->
+
+                                <!-- <td>[[${state.index}]] / [[${state.count}]]</td> -->
+                                <!-- [[${state.index}]] 반복문의 횟수/ [[${state.count}]] 반복횟수-->
+
+                                <td>[[${stuInfo.className}]]</td>
+                                <td>[[${stuInfo.stuNum}]]</td>
+
+                                <td> <!--  이름 클릭시 조회할 수있도록 -->
+                                    <span th:onclick="goDetail([[${stuInfo.stuNum}]])" id="name-span">
+                                        [[${stuInfo.stuName}]]
+                                    </span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </td>
+        <td>2
+            <div class="stu-detail-div">
+                
+            </div>
+           
+
+        </td>
+     </tr>
+    </tbody>
+</table>
+
+
+ <script src="/stu_manage.js"></script>
+ <!-- 실제 연결될 파일명과 동일하게  -->
+</body>
+</html>

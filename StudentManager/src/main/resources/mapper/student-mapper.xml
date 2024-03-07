@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 해당 파일에 모든 쿼리문을 작성 -->
+<mapper namespace="stuMapper">
+           <!--매칭시키기-->
+        <resultMap id="stu" type="com.green.StudentManager.vo.StuVO">
+<!--           column: 테이블의 실제명, property: VO클래스에 있는 변수명 -->
+         <result column="STU_NO" property="stuNo"/>
+         <result column="STU_NAME" property="stuName"/>
+         <result column="KOR_SCORE" property="korScore"/>
+         <result column="ENG_SCORE" property="engScore"/>
+         <result column="INTRO" property="intro"/>
+        </resultMap>
+	<insert id="insertStu">
+        INSERT INTO STU (
+        STU_NO
+        , STU_NAME
+        , KOR_SCORE
+        , ENG_SCORE
+        , INTRO
+        )
+        VALUES (
+<!--            빈값채우기 위해 stuVO가지고 옴-->
+        #{stuNo}
+<!-- = stuVO.getStuNo(); getter가 호출되는 것-->
+        ,#{stuName}
+        ,#{korScore}
+        ,#{engScore}
+        ,#{intro}
+
+        )
+    </insert>
+<!--resultMap 조회한 데이터를 자바로 가져올 건데 기본 자료형으로 못 가져와서 내가 만든 자료형으로 가져오는 것 -->
+<!--만들어진 stu를 가지고 오겠다...,    -->
+        <select id="selectStuList" resultMap="stu">
+                SELECT STU_NO
+                , STU_NAME
+                , KOR_SCORE
+                , ENG_SCORE
+                FROM STU
+        </select>
+
+<!--      학생 선택-->
+        <select id="selectStu" resultMap="stu">
+            SElECT STU_NO
+            , STU_NAME
+            , KOR_SCORE
+            , ENG_SCORE
+            , INTRO
+            FROM STU
+            WHERE STU_NO= #{stuNo}
+<!--학번으로 조회. 이름은 겹칠 수 있으니-->
+        </select>
+
+    <delete id="deleteStu">
+        DELETE
+        FROM STU
+        WHERE STU_NO=#{stuNo}
+    </delete>
+
+
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

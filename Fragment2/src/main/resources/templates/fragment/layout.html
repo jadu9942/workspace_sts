@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+                xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+<meta charset="UTF-8">
+<title></title>
+
+<th:block layout:fragment="content_css">
+    
+</th:block>
+
+<style>
+    /* 동시에 열리는 html에 다 저장됨 */
+    h3{
+        background-color: aqua;
+    }
+</style>
+</head>
+<body>
+ <h3>layout.html 파일</h3>
+
+ <div>
+    <th:block th:replace="~{fragment/menu::menuFragment}"></th:block>
+ </div>
+ <div>
+    <th:block th:replace="~{fragment/side_menu::menuSideFragment}"></th:block>
+ </div>
+
+ <div>
+    <th:block layout:fragment="contentFragment"></th:block>
+ </div>
+ 
+  <div>
+    <th:block th:replace="~{fragment/footer::footerFragment}"> </th:block>
+ </div>
+</body>
+</html>

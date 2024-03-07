@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title></title>
+<!-- <style>
+.container{
+    width:700px;
+        margin:0 auto;
+}
+.btn-div{
+    text-align: center;
+        margin-top: 16px;
+}
+
+</style> -->
+</head>
+<body>
+글번호: [[${board.boardNum}]] <br>
+제목: [[${board.boardTitle}]] <br>
+내용: [[${board.boardContent}]] <br>
+작성자: [[${board.writer}]] <br>
+작성일: [[${board.createDate}]] <br>
+
+
+<input type="button" value="삭제" th:onclick="|location.href='@{/deleteBoard(boardNum=${board.boardNum})}'|">
+<input type="button" value="수정" th:onclick="|location.href='@{/updateBoardForm(boardNum=${board.boardNum})}'|">
+                                               <!--페이지 이동 시 가져갈 데이터 있을때  -->
+    <!-- <div class="container">
+    <table>
+    <tr>
+        <td>글번호</td>
+        <td><input type="text" name="boardNum"></td>
+        <td>작성자</td>
+        <td><input type="text" name="writer"></td>
+        <td>작성일</td>
+        <td><input type="date" name="createDate"></td>
+    </tr>
+    <tr>
+        <td>제목</td>
+        <td><input type="text" name="boardTitle"></td>
+    </tr>
+    <tr>
+        <td>내용</td>
+        <td><textarea name="boardContent" cols="30" rows="10"></textarea></td>
+    </tr>
+
+</table>
+    <div class="btn-div"><input type="button" value="뒤로가기" onclick="location.href='/boardList'">
+    <input type="button" value="수정">
+    <input type="button" value="삭제">
+</div>
+</div> -->
+
+
+</body>
+</html>

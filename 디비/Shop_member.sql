@@ -1,0 +1,454 @@
+-- 쇼핑몰 프로젝트 테이블 
+
+-- 회원 정보 테이블
+CREATE TABLE SHOP_MEMBER(
+	MEMBER_ID VARCHAR(20) PRIMARY KEY
+	, MEMBER_PW VARCHAR(20) NOT NULL
+	, MEMBER_NAME VARCHAR(20) NOT NULL
+	, GENDER VARCHAR(10) NOT NULL -- male, female
+	, MEMBER_EMAIL VARCHAR(50) NOT NULL UNIQUE
+	, MEMBER_TEL VARCHAR(20) -- 010-1111-2222\
+	, MEMBER_ADDR VARCHAR(50) 
+	, ADDR_DETAIL VARCHAR(50)
+	, POST_CODE VARCHAR(10) -- 12345 
+	, JOIN_DATE DATETIME DEFAULT CURRENT_TIMESTAMP
+	, MEMBER_ROLL VARCHAR(20) DEFAULT 'USER'-- 권한 일반회원은 USER 관리자는 ADMIN
+	 
+);
+
+
+
+-- 상품 카테고리 정보 테이블
+CREATE TABLE ITEM_CATEGORY (
+ CATE_CODE INT AUTO_INCREMENT PRIMARY KEY
+ , CATE_NAME VARCHAR(50) NOT NULL UNIQUE
+);
+
+INSERT INTO item_category VALUES (1, 'IT/인터넷');
+INSERT INTO item_category VALUES (2, '소설/에세이');
+INSERT INTO item_category VALUES (3, '문화/여행');
+
+COMMIT;
+
+SELECT * FROM item_category;
+
+
+
+-- 상품 정보 테이블
+CREATE TABLE SHOP_ITEM (
+	ITEM_CODE INT AUTO_INCREMENT PRIMARY KEY
+	, ITEM_NAME VARCHAR(50) NOT NULL UNIQUE
+	, ITEM_PRICE INT NOT NULL 
+	, ITEM_STOCK INT DEFAULT 10
+	, ITEM_INTRO VARCHAR(100)
+	, REG_DATE DATETIME DEFAULT CURRENT_TIMESTAMP
+	, CATE_CODE INT NOT NULL REFERENCES item_category(CATE_CODE) 
+	
+);
+
+-- 아예 안 지우거나 지우려면 상품 먼저 지우고 카테고리 지우기
+
+-- 상품의 이미지 정보를 관리하는 테이블 
+CREATE TABLE ITEM_IMAGE(
+	IMG_CODE INT AUTO_INCREMENT PRIMARY KEY
+	, ORIGIN_FILE_NAME VARCHAR(100) NOT NULL -- 원본 파일명
+	, ATTACHED_FILE_NAME VARCHAR(100) NOT NULL -- 실제로 첨부된 파일명
+	, IS_MAIN VARCHAR(2) NOT NULL -- 메인 이미지이면 'Y' , 아니면 'N'
+	, ITEM_CODE INT NOT NULL REFERENCES shop_item (ITEM_CODE)
+);
+
+
+
+-- 장바구니 정보 테이블  이 테이블 하나만 조회 하는 경우 거의 없음 JOIN해서 조회 해야 함        (상품정보 아이템 테이블에 있는 PK 알면 상품에 대한 정보 가져올 수 있음)
+CREATE TABLE SHOP_CART(
+	CART_CODE INT AUTO_INCREMENT PRIMARY KEY 
+	, ITEM_CODE INT NOT NULL REFERENCES shop_item(ITEM_CODE)
+	, MEMBER_ID VARCHAR(20) NOT NULL REFERENCES shop_member(MEMBER_ID)
+	, CART_CNT INT NOT NULL     -- 장바구니에 담은 개수
+	, CART_DATE DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+
+SELECT * FROM shop_cart;
+
+INSERT INTO shop_buy (
+    buy_code
+	, MEMBER_ID
+	, BUY_PRICE
+) VALUES (
+ 10
+	, 'admin'
+	, 10000
+);
+
+SELECT * FROM shop_buy;
+
+-- 구매 정보 테이블 
+CREATE TABLE SHOP_BUY (
+	BUY_CODE INT AUTO_INCREMENT PRIMARY KEY
+	, MEMBER_ID VARCHAR(20) NOT NULL REFERENCES shop_member(MEMBER_ID)
+	, BUY_PRICE INT NOT NULL 
+	, BUY_DATE DATETIME DEFAULT CURRENT_TIMESTAMP
+		
+);
+-- 구매 상세 정보 테이블
+CREATE TABLE BUY_DETAIL (
+	BUY_DETAIL_CODE INT AUTO_INCREMENT PRIMARY KEY
+	, ITEM_CODE INT NOT NULL REFERENCES shop_item(ITEM_CODE)
+	, BUY_CNT INT NOT NULL 
+	, TOTAL_PRICE INT NOT NULL 
+	, BUY_CODE INT NOT NULL REFERENCES SHOP_BUY (BUY_CODE)
+);
+
+-- 모달 창 구매 정보 조회 (내꺼)
+SELECT 
+	DETAIL.BUY_CODE
+	, MEMBER_ID
+	, BUY_PRICE
+	, BUY_DATE
+	, BUY_CNT
+	, TOTAL_PRICE
+	, ITEM_NAME
+	, ATTACHED_FILE_NAME
+FROM buy_detail AS DETAIL INNER JOIN shop_item AS ITEM
+ON DETAIL.ITEM_CODE = ITEM.ITEM_CODE
+INNER JOIN shop_buy BUY
+ON BUY.BUY_CODE = DETAIL.BUY_CODE
+INNER JOIN item_image IMAGE 
+ON IMAGE.ITEM_CODE = ITEM.ITEM_CODE
+WHERE IS_MAIN='Y'
+AND BUY.BUY_CODE=2;
+
+
+-- 모달 창 구매정보 조회(선생님꺼)
+SELECT DETAIL.BUY_CODE
+   , MEMBER_ID
+   , BUY_PRICE
+   , BUY_DATE 
+   , BUY_CNT
+   , TOTAL_PRICE
+   , ITEM_NAME
+   , ATTACHED_FILE_NAME
+FROM shop_buy BUY 
+INNER JOIN buy_detail DETAIL
+ON BUY.BUY_CODE=DETAIL.BUY_CODE
+INNER JOIN shop_item ITEM
+ON ITEM.ITEM_CODE = DETAIL.ITEM_CODE
+INNER JOIN item_image IMG 
+ON IMG.ITEM_CODE = ITEM.ITEM_CODE
+WHERE IS_MAIN='Y'
+AND BUY.BUY_CODE=1; 
+
+
+
+
+
+
+-- 관리자용 구매 목록 조회
+SELECT BUY_CODE
+	, MEMBER_ID
+	,	BUY_PRICE
+	, BUY_DATE
+FROM shop_buy
+ORDER BY BUY_DATE DESC;
+
+SELECT * FROM cart_view;
+
+SELECT ITEM_CODE
+, CART_CNT
+, TOTAL_PRICE 
+FROM cart_view
+WHERE CART_CODE= IN (8,9); -- CART_CODE가 8이거나 9인 데이터 조회 그리고 조회된 데이터로 구매정보를 INSERT 
+
+SELECT * FROM shop_buy;
+
+-- 첫번째 매개변수가  NULL이면 오른쪽 매개변수 값이 나옴
+SELECT IFNULL(MAX(BUY_CODE), 0)+1  FROM shop_buy;
+
+
+
+
+
+SELECT * FROM shop_buy;
+SELECT * FROM BUY_DETAIL;
+
+-- 장바구니에 담은 상품명, 가격, 개수, 총가격을 조회하는 쿼리
+SELECT 
+  ITEM_NAME
+, ITEM_PRICE
+, CART_CNT
+, ITEM_PRICE * CART_CNT
+FROM shop_cart CART INNER JOIN shop_item ITEM
+ON CART.ITEM_CODE = ITEM.ITEM_CODE;
+
+-- 세개 테이블 JOIN
+-- 회원아이디가 'java'인 회원의 장바구니에 담긴 장바구니 목록을 조회
+-- 장바구니 코드, 대표이미지명(첨부된 파일명), 상품명, 가격, 개수, 총가격
+SELECT 
+   ITEM_NAME
+ , ITEM_PRICE
+ , ITEM_CNT 
+ , ITEM_PRICE * CART_CNT AS TOTAL_PRICE
+ , CART_CODE
+ , ATTACHED_FILE_NAME 
+FROM shop_cart CART 
+INNER JOIN shop_item ITEM
+ON CART.ITEM_CODE = ITEM.ITEM_CODE -- 첫번째 조인 끝나고 그 다음 테이블 조인 해주면 됨 그리고 위에 테이블 중 하나 같은 컬럼이 있는 테이블 하나 조인
+INNER JOIN item_image IMG
+ON IMG.ITEM_CODE = CART.ITEM_CODE
+WHERE MEMBER_ID ='java'
+AND IS_MAIN='Y';
+ 
+
+
+
+-- 다중 등록
+INSERT INTO item_image (
+	IMG_CODE
+	, ORIGIN_FILE_NAME
+	, ATTACHED_FILE_NAME
+	, IS_MAIN
+	, ITEM_CODE
+) 
+VALUES 
+(1,'aa.jpg','aaa.jpg', 'Y',9), 
+(2,'bb.jpg','bbb.jpg', 'N',9), 
+(3,'cc.jpg','ccc.jpg', 'N',9);
+
+
+
+SELECT * FROM item_image;
+
+
+
+SELECT * FROM shop_member;
+SELECT * FROM shop_item;
+
+ SELECT
+        MEMBER_ID
+        ,MEMBER_PW
+        ,MEMBER_ROLL
+        FROM SHOP_MEMBER
+        WHERE MEMBER_ID='abc'
+        AND MEMBER_PW='1111';
+        -- 조회한 데이터가 조회가 되는 지 안 되는지 확인해야 함
+        -- 조회되면 로그인 가능 조회 안 되면 로그인 불가능
+
+UPDATE shop_member 
+SET MEMBER_ROLL='ADMIN'
+WHERE MEMBER_ID='admin'; -- 일반회원 관리자로 변경한 거
+
+COMMIT;
+
+DELETE FROM shop_item WHERE ITEM_NAME=;
+DELETE FROM shop_member WHERE MEMBER_ID='aaaa'; 
+
+
+-- 다음에 들어갈 ITEM_CODE를 조회
+-- 현재 등록된 ITEM_CODE 중 가장 큰 값을 구한 후 +1 (SELECT로 하면됨)
+
+SELECT IFNULL(MAX(ITEM_CODE), 0)  +1  FROM shop_item; -- 현재 등록된 아이템 코드 중 가장 큰 값 구하기 그리고 +1
+
+
+DELETE FROM shop_cart;
+DELETE FROM item_image;
+DELETE FROM shop_item;
+COMMIT;
+
+SELECT COMM
+, IFNULL(COMM, 0)
+ FROM emp;
+ 
+ 
+SELECT ITEM.ITEM_CODE
+        , ITEM_NAME
+        , ITEM_PRICE
+        , ATTACHED_FILE_NAME
+        FROM shop_item ITEM INNER JOIN item_image IMG
+        ON ITEM.ITEM_CODE = IMG.ITEM_CODE
+        WHERE IS_MAIN= 'Y'
+        ORDER BY REG_DATE DESC; 
+        
+        
+-- 상품 상세 정보 조회
+-- ITEM_CODE, ITEM_NAME, ITEM_PRICE, ITEM_INTRO
+-- ATTACHED_FILE_NAME
+SELECT ITEM.ITEM_CODE
+	, ITEM_NAME
+	, ITEM_PRICE
+	, ITEM_INTRO 
+	, ATTACHED_FILE_NAME     
+FROM shop_item ITEM INNER JOIN item_image IMG
+ON ITEM.ITEM_CODE = IMG.ITEM_CODE
+WHERE ITEM.ITEM_CODE =  1;
+
+
+-- 장바구니와 관련된 모든 정보를 조회할 수 있는 VIEW 생성 
+CREATE OR REPLACE VIEW CART_VIEW
+AS 
+SELECT 
+     CART_CODE  -- 카트 테이블 조회
+    , CART.ITEM_CODE
+    , CART.MEMBER_ID
+    , CART_CNT 
+    , CART_DATE 
+    
+    , ITEM_NAME  -- 상품정보
+    , ITEM_PRICE
+    , ITEM_INTRO
+    , ITEM_PRICE * CART_CNT TOTAL_PRICE
+
+    
+    , MEMBER_NAME -- 회원 정보 
+    , MEMBER_TEL
+    , CONCAT(POST_CODE,' ' ,MEMBER_ADDR,' ',ADDR_DETAIL) AS ADDRESS
+    
+    , ATTACHED_FILE_NAME  -- 장바구니 담긴 이미지 파일
+    , ORIGIN_FILE_NAME
+    , IS_MAIN
+    , IMG_CODE
+    
+    , ITEM.CATE_CODE       -- 카테고리 정보
+	 , CATE_NAME               
+    
+ FROM shop_cart CART 
+ INNER JOIN shop_item ITEM
+ ON CART.ITEM_CODE = ITEM.ITEM_CODE
+
+INNER JOIN shop_member MEMBER
+ON MEMBER.MEMBER_ID = CART.MEMBER_ID 
+INNER JOIN item_image IMG 
+ON IMG.ITEM_CODE= ITEM.ITEM_CODE
+INNER JOIN item_category CATE 
+ON CATE.CATE_CODE = ITEM.CATE_CODE
+WHERE IS_MAIN= 'Y';
+
+    
+    
+    
+    
+   
+-- 15514 울산 남구 그린아파트 111동 =>>하나의 데이터로 주소 조회
+SELECT POST_CODE
+	, MEMBER_ADDR
+	, ADDR_DETAIL
+	, CONCAT(POST_CODE,' ' ,MEMBER_ADDR,' ',ADDR_DETAIL)  -- 문자열 나열
+FROM shop_member;
+ 
+ 
+ 
+ -- 내 장바구니에 지금 추가하려는 상품이 있는 지 확인
+ -- ITEM_CODE로 장바구니에 있는 상품을 확인 
+SELECT * FROM shop_cart;
+
+
+-- 아이디가 'JAVA'인 회원의 장바구니에 ITEM_CODE가 1인 상품이 있는지 확인 
+-- 있는지 없는지에 따라 쿼리 INSERT O UPDATE 
+SELECT COUNT(CART_CODE) -- COUNT 개수 0이면 장바구니에 없으니 INSERT  0아니면 update
+FROM shop_cart
+WHERE MEMBER_ID= 'admin'
+AND ITEM_CODE= 5;
+
+
+DELETE FROM shop_cart 
+WHERE CART_CODE=1 OR CART_CODE=2; --장바구니에서 상품 선택삭제
+
+ -- 위 커리와 동일한 기능
+DELETE FROM shop_cart
+WHERE CART_CODE IN (1,2,3);
+ 
+
+SELECT * FROM shop_cart;
+ 
+ -- 구매하고자 하는 CART_CODE만 들고 오기
+ SELECT CART.ITEM_CODE
+ , CART_CNT AS BUY_CNT 
+ , ITEM_PRICE * CART_CNT 
+ 
+ FROM shop_cart CART INNER JOIN shop_item ITEM 
+ ON CART.ITEM_CODE = ITEM.ITEM_CODE
+ WHERE CART_CODE IN ( 8 ,9 );
+ 
+ 
+ 
+SELECT ITEM_CODE
+ , CART_CNT 
+ ,TOTAL_PRICE
+FROM cart_view
+WHERE CART_CODE IN (8, 9);
+ 
+ 
+ -- 구매  날짜 및 총 구매 금액 
+ SELECT BUY_DATE
+ , BUY_PRICE
+ FROM shop_buy
+ORDER BY BUY_DATE DESC;
+
+
+SELECT * FROM shop_buy;
+SELECT * FROM buy_detail;
+SELECT * FROM item_image;
+
+-- 상품 코드, 상품명, 대표이미지명, 구매 수량, 구매 가격 조회하는 쿼리
+-- JOIN 사용
+SELECT BUY.BUY_CODE 
+	, DETAIL.ITEM_CODE
+	, BUY_CNT
+	, TOTAL_PRICE 
+	, ITEM_NAME 
+	, ATTACHED_FILE_NAME
+	, BUY_DATE 
+	, BUY_PRICE
+FROM buy_detail DETAIL INNER JOIN shop_item ITEM
+ON DETAIL.ITEM_CODE = ITEM.ITEM_CODE
+INNER JOIN item_image IMG 
+ON IMG.ITEM_CODE= ITEM.ITEM_CODE
+INNER JOIN shop_buy BUY
+ON BUY.BUY_CODE= DETAIL.BUY_CODE 
+WHERE IS_MAIN= 'Y'
+AND MEMBER_ID='admin'; 
+
+
+
+-- 서브쿼리 사용해서 조회
+SELECT 
+	ITEM_CODE
+	, BUY_CNT
+	, TOTAL_PRICE
+	, (SELECT ITEM_NAME 
+	   FROM shop_item WHERE ITEM_CODE = DETAIL.ITEM_CODE) ITEM_NAME
+	, (SELECT ATTACHED_FILE_NAME 
+	   FROM item_image 
+		WHERE ITEM_CODE=DETAIL.ITEM_CODE AND IS_MAIN='Y') ATTACHED_FILE_NAME
+	,  (SELECT BUY_DATE 
+	    FROM shop_buy 
+		 WHERE BUY_CODE= DETAIL.BUY_CODE) BUY_DATE	
+FROM buy_detail DETAIL;
+ 	
+
+
+-- 1 2 3 11
+ SELECT * FROM shop_buy;
+  SELECT * FROM BUY_DETAIL;
+
+  
+DELETE FROM buy_detail
+WHERE BUY_CODE NOT IN (1,2,3,11);
+-- BUY_CODE가 1,2,3,11 번 제외하고 삭제
+DELETE FROM SHOP_BUY
+WHERE BUY_CODE NOT IN (1,2,3,11);
+
+COMMIT;
+ 
+ SELECT 
+  ITEM_CODE
+  , ITEM_NAME
+  , ITEM_STOCK
+ FROM shop_item;
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
