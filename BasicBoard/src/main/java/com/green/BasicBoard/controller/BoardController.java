@@ -132,6 +132,7 @@ public class BoardController {
             List<GrantedAuthority> authlist = new ArrayList<>(user.getAuthorities());
             for(GrantedAuthority authority: authlist){
                 System.out.println(authority.getAuthority());
+                
             }
              return "redirect:/";
     }
