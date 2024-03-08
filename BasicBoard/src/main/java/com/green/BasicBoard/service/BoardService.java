@@ -26,9 +26,5 @@ public interface BoardService {
     void join(MemberVO memberVO);
 
     //로그인
-<<<<<<< HEAD
-    MemberVO login(MemberVO memberVO);
-=======
     MemberVO login(String memberId);
->>>>>>> 9b1e33564e4cf34fc4ddf00d2aa022056a783923
 }

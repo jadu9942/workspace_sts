@@ -3,23 +3,16 @@ package com.green.BasicBoard.controller;
 import com.green.BasicBoard.service.BoardServiceImpl;
 import com.green.BasicBoard.vo.BoardVO;
 import jakarta.annotation.Resource;
-<<<<<<< HEAD
-=======
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
->>>>>>> 9b1e33564e4cf34fc4ddf00d2aa022056a783923
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-
-<<<<<<< HEAD
-=======
 import java.util.ArrayList;
->>>>>>> 9b1e33564e4cf34fc4ddf00d2aa022056a783923
 import java.util.List;
 
 @Controller
@@ -27,20 +20,15 @@ public class BoardController {
     @Resource(name = "boardService")
     private BoardServiceImpl boardService;
 
-<<<<<<< HEAD
-=======
     @Autowired
     private BCryptPasswordEncoder encoder;
 
->>>>>>> 9b1e33564e4cf34fc4ddf00d2aa022056a783923
     //게시글 목록 페이지로 이동
     @GetMapping("/")
     public String boardList(Model model){
         //목록 데이터 조회 후 HTML 전달
         List<BoardVO> boardList = boardService.selectBoardList();
         model.addAttribute("boardList", boardList);
-<<<<<<< HEAD
-=======
 
         //암호화 예제
         //encode: 매개변수로 전달된 문자열을 암호화
@@ -54,7 +42,7 @@ public class BoardController {
         //암호화 된 게 java와 일치하냐 맞으면 true
         boolean b1= encoder.matches("java",s1);
 
->>>>>>> 9b1e33564e4cf34fc4ddf00d2aa022056a783923
+
         return "board_list";
     }
 
@@ -107,8 +95,6 @@ public class BoardController {
         return "redirect:/boardDetail?boardNum=" + boardVO.getBoardNum();
     }
 
-<<<<<<< HEAD
-=======
     @GetMapping("/manager")
     public String manager(){
         return "manager";
@@ -150,5 +136,5 @@ public class BoardController {
             }
              return "redirect:/";
     }
->>>>>>> 9b1e33564e4cf34fc4ddf00d2aa022056a783923
+
 }
