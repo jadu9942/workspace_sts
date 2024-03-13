@@ -41,30 +41,30 @@ public class MemberController {
         return "content/member/login";
     }
 
-    //로그인
-    @PostMapping("/login")
-    public String login(MemberVO memberVO, HttpSession session){
-        MemberVO loginInfo = memberService.login(memberVO);
+//    //로그인
+//    @PostMapping("/login")
+//    public String login(MemberVO memberVO, HttpSession session){
+//        MemberVO loginInfo = memberService.login(memberVO);
+//
+//        if(loginInfo != null){
+//            session.setAttribute("loginInfo", loginInfo);
+//        }
+//
+//        return "content/member/login_result";
+//    }
 
-        if(loginInfo != null){
-            session.setAttribute("loginInfo", loginInfo);
-        }
-
-        return "content/member/login_result";
-    }
-
-    //비동기 로그인
-    @ResponseBody
-    @PostMapping("/loginFetch")
-    public String loginFetch(MemberVO memberVO, HttpSession session){
-        MemberVO loginInfo = memberService.login(memberVO);
-
-        if(loginInfo != null){
-            session.setAttribute("loginInfo", loginInfo);
-        }
-
-        return loginInfo == null ? "" : loginInfo.getMemberId();
-    }
+//    //비동기 로그인
+//    @ResponseBody
+//    @PostMapping("/loginFetch")
+//    public String loginFetch(MemberVO memberVO, HttpSession session){
+//        MemberVO loginInfo = memberService.login(memberVO);
+//
+//        if(loginInfo != null){
+//            session.setAttribute("loginInfo", loginInfo);
+//        }
+//
+//        return loginInfo == null ? "" : loginInfo.getMemberId();
+//    }
 
     //로그아웃
     @GetMapping("/logout")

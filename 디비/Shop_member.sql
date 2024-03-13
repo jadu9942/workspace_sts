@@ -16,7 +16,7 @@ CREATE TABLE SHOP_MEMBER(
 	 
 );
 
-
+SELECT * FROM member;
 
 -- 상품 카테고리 정보 테이블
 CREATE TABLE ITEM_CATEGORY (

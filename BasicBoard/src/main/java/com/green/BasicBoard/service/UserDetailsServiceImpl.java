@@ -10,9 +10,10 @@ import org.springframework.stereotype.Service;
 
 //스프링 시큐리티가 제공하는 로그인 기능을 구현하는 클래스
 //userDetailsService 인터페이스를 상속해서 구현
+
 @Service("userDetailsService")
 public class UserDetailsServiceImpl implements UserDetailsService {
-    @Resource(name="boardService")
+    @Resource(name="memberService")
     private BoardService boardService;
 
     //시큐리티가 알아서 로그인 할 때 호출하는 메소드

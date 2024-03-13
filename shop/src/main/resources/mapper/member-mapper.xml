@@ -42,12 +42,12 @@
     </insert>
 
     <select id="login" resultMap="member">
+<!--      input태그에 입력한 아이디만 가지고 이 아이디와 일치하는 사람의 로그인 정보 조회 -->
         SELECT MEMBER_ID
-            , MEMBER_NAME
+            , MEMBER_PW
             , MEMBER_ROLL
         FROM SHOP_MEMBER
         WHERE MEMBER_ID = #{memberId}
-        AND MEMBER_PW = #{memberPw}
     </select>
 
 

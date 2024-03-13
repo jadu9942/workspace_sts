@@ -43,48 +43,49 @@
         }
     </style>
 
-   
+
     <!-- overFlow: visible; 범위 벗어나도 보임/ hidden 벗어나면 숨김
         / scroll 스크롤 만들어짐 범위 초과하던 아니던 무조건 스크롤 생김
-          auto; 알아서 사이즈에 맞게 스크롤 생김 overFlow-y:auto; 세로 기 -->
+        auto; 알아서 사이즈에 맞게 스크롤 생김 overFlow-y:auto; 세로 기 -->
     <input id="updateItemCode" type="hidden" th:value="${updateItemCode}">
     <div class="row">
         <div class="col-6">
             <h5>상품 목록</h5>
             <div>
-                <div class="text-end" style="color: red; font-size:0.9rem ;">*총  [[${#lists.size(itemLists)}]]개의 상품이 있습니다.</div>
+                <div class="text-end" style="color: red; font-size:0.9rem ;">*총 [[${#lists.size(itemLists)}]]개의 상품이
+                    있습니다.</div>
             </div>
             <div class="scrollbar">
-            <table class="table table-bordered align-middle text-center">
-                <colgroup>
-                    <col width="10%">
-                    <col width="15%">
-                    <col width="30%">
-                    <col width="10%">
-                    <col width="20%">
-                </colgroup>
-                <thead>
-                    <tr>
-                        <td>NO</td>
-                        <td>상품코드</td>
-                        <td>상품명</td>
-                        <td>재고</td>
-                        <td>상태</td>
-                    </tr>
-                </thead>
-                
-                <tbody>
-                    <tr th:each=" listItem, star :${itemLists}" th:onclick="getDetail([[${listItem.itemCode}]])">
-                        <td>[[${#numbers.formatInteger(#lists.size(itemLists)-star.index,2)}]]</td>
-                        <td>[[${listItem.itemCode}]]</td>
-                        <td>[[${listItem.itemName}]]</td>
-                        <td>[[${listItem.itemStock}]]</td>
-                        <td>[[${listItem.strStatus}]]</td>
-                    </tr>
-                </tbody>
-              
-            </table>
-        </div>
+                <table class="table table-bordered align-middle text-center">
+                    <colgroup>
+                        <col width="10%">
+                        <col width="15%">
+                        <col width="30%">
+                        <col width="10%">
+                        <col width="20%">
+                    </colgroup>
+                    <thead>
+                        <tr>
+                            <td>NO</td>
+                            <td>상품코드</td>
+                            <td>상품명</td>
+                            <td>재고</td>
+                            <td>상태</td>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr th:each=" listItem, star :${itemLists}" th:onclick="getDetail([[${listItem.itemCode}]])">
+                            <td>[[${#numbers.formatInteger(#lists.size(itemLists)-star.index,2)}]]</td>
+                            <td>[[${listItem.itemCode}]]</td>
+                            <td>[[${listItem.itemName}]]</td>
+                            <td>[[${listItem.itemStock}]]</td>
+                            <td>[[${listItem.strStatus}]]</td>
+                        </tr>
+                    </tbody>
+
+                </table>
+            </div>
         </div>
 
         <div class="col-6 detail-div">
@@ -92,32 +93,32 @@
         </div>
 
 
-  
-            <!-- Modal -->
-            <div class="modal fade" id="imgModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog">
+
+        <!-- Modal -->
+        <div class="modal fade" id="imgModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                    <img src="" width="100%">
+                        <img src="" width="100%">
                     </div>
                     <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary">Save changes</button>
                     </div>
                 </div>
-                </div>
             </div>
+        </div>
 
 
 
-  
 
 
-  
+
+
 
 </th:block>
 

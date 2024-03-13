@@ -8,6 +8,6 @@ public interface MemberService {
     void join(MemberVO memberVO);
 
     //회원 가입
-    MemberVO login(MemberVO memberVO);
+    MemberVO login(String memberId);
 
 }
