@@ -1,5 +1,6 @@
 package com.green.shop.security;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -13,6 +14,11 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @EnableWebSecurity
 @Configuration
 public class SecurityConfig {
+    @Autowired
+    private LoginFailHandler loginFailHandler;
+
+    @Autowired
+    private LoginSuccessHandler loginSuccessHandler;
 
     //인증과 인가에 대한 설정 내용이 있는 메소드를 구현
     //반드시 리턴타입은 SecurityFilterChain
@@ -40,10 +46,14 @@ public class SecurityConfig {
                         formLogin -> {
                             formLogin.loginPage("/member/loginForm")
                                     .loginProcessingUrl("/member/login") //이런 요청 들어오면 security가 알아서 로그인 실행(컨트롤러 가는 거 아님)
-                                    .defaultSuccessUrl("/",true) //true 없으면 로그인 성공 시 이전 페이지 혹은 가고자 했던 페이지로 이동/ true 있으면 "/"페이지로 이동
-                                    .failureUrl("/member/loginForm")
+                                    //.defaultSuccessUrl("/") //true 없으면 로그인 성공 시 이전 페이지 혹은 가고자 했던 페이지로 이동/ true 있으면 "/"페이지로 이동
+                                    //.failureUrl("/member/loginForm")
                                     .usernameParameter("memberId")
-                                    .passwordParameter("memberPw");
+                                    .passwordParameter("memberPw")
+                                    //로그인 성공 시 실행 시킬 클래스의 객체
+                                    .successHandler(loginSuccessHandler)
+                                    //로그인 실패 시 실행 시킬 클래스의 객체
+                                    .failureHandler(loginFailHandler);
                         }
                 )
                 .logout(
@@ -65,8 +75,8 @@ public class SecurityConfig {
                 new AntPathRequestMatcher("/upload/**"), //upload파일 하위에 있는 것 들 전부 ignore
                 new AntPathRequestMatcher("/css/**"),
                 new AntPathRequestMatcher("/images/**"),
-                new AntPathRequestMatcher("/js/**")
-                //new AntPathRequestMatcher("/**") 위에 내용 없으면 사용 가능
+                new AntPathRequestMatcher("/js/**"),
+                new AntPathRequestMatcher("/favicon.ico")
 
         );
     }
