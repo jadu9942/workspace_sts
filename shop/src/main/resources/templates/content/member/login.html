@@ -15,6 +15,9 @@
                     <input name="memberId" type="text" class="form-control" id="memberId">
                     <label for="memberId" style="font-size: 0.8rem;">Input your ID</label>
                 </div>
+                <div th:if="${errorMsg != 'success'}" style="color: red; font-size: 0.9rem;">
+                    [[${errorMsg}]]
+                </div>
                 <div class="form-floating mb-3">
                     <input name="memberPw" type="password" class="form-control" id="memberPw">
                     <label for="memberPw" style="font-size: 0.8rem;">Input your Password</label>

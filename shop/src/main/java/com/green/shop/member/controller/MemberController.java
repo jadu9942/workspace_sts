@@ -5,10 +5,8 @@ import com.green.shop.member.vo.MemberVO;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("/member")
@@ -37,7 +35,8 @@ public class MemberController {
 
     //로그인 페이지로 이동
     @GetMapping("/loginForm")
-    public String loginForm(){
+    public String loginForm(@RequestParam(name="errorMsg" ,required = false, defaultValue = "success") String errorMsg, Model model){
+        model.addAttribute("errorMsg", errorMsg);
         return "content/member/login";
     }
 
