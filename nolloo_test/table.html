@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body>
+    
+    <table class="mx-auto text-center">
+        <colgroup>
+            <col width="8%">
+            <col width="25%">
+            <col width="10%">
+            <col width="20%">
+        </colgroup>
+        <thead>
+            <tr class="text-white font-semibold border-b-2 border-b-indigo-600 border-t border-t-indigo-500 bg-indigo-400">
+                <td class="p-3">Nog</td>
+                <td class="p-3">제목</td>
+                <td class="p-3">인원수</td>
+                <td class="p-3">시작 날짜</td>
+            </tr>
+        </thead>
+        <tbody class=" [&>tr:hover]:!bg-slate-200 [&>tr:nth-child(odd)]:bg-slate-100">
+            <tr class="board [&>td]:p-3 border-b">
+                <td>1</td>
+                <td>거제송년불꽃축제</td>
+                <td>0</td>
+                <td>2024-12-31</td>
+            </tr>
+            <tr class="board [&>td]:p-3 border-b">
+                <td>2</td>
+                <td>거제도국제펭귄수영축제</td>
+                <td>0</td>
+                <td>2024-12-01</td>
+            </tr>
+            <tr class="board [&>td]:p-3 border-b">
+                <td>3</td>
+                <td>거제대구수산물축제</td>
+                <td>0</td>
+                <td>2024-12-01</td>
+            </tr>
+            
+        </tbody>
+    </table>
+    
+</body>
+</html>
