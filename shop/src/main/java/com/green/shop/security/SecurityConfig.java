@@ -29,7 +29,9 @@ public class SecurityConfig {
         security.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(
                         c -> { //인증 인가
-//                           c.requestMatchers(
+                            c.anyRequest().permitAll();
+
+//                            c.requestMatchers(
 //                                   new AntPathRequestMatcher("/"),
 //                                   new AntPathRequestMatcher("/item/list"),
 //                                   new AntPathRequestMatcher("/member/loginForm"), //로그인 하러 가는 페이지
@@ -40,7 +42,7 @@ public class SecurityConfig {
 //                                    new AntPathRequestMatcher("/admin/**")
 //                            ).hasRole("/ADMIN") //어떤 권한(인가)이 있을 때만 접근 가능
 //                            .anyRequest().authenticated();
-                                c.anyRequest().permitAll();
+//                                c.anyRequest().permitAll();
                         }
                 )
                 .formLogin(//로그인 어떻게 할 거냐

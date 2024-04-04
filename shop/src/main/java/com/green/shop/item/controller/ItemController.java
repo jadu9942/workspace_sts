@@ -2,12 +2,14 @@ package com.green.shop.item.controller;
 
 import com.green.shop.item.service.ItemServiceImpl;
 import com.green.shop.item.vo.ItemVO;
+import com.green.shop.study.fetch.controller.MemberVO;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
@@ -17,6 +19,29 @@ import java.util.List;
 public class ItemController {
     @Resource(name = "itemService")
     private ItemServiceImpl itemService;
+
+    @GetMapping("/test1")
+    public String test1(Model model){
+        System.out.println("test1() 메소드 실행~");
+
+        model.addAttribute("age",30);
+        model.addAttribute("name","hong");
+        model.addAttribute("member", new MemberVO());
+        return "content/member/login";
+    }
+
+    @GetMapping("/test2")
+    public String test2(){
+        System.out.println("test2() 메소드 실행~");
+
+        return "";
+    }
+    @GetMapping("/test3")
+    public String test3(){
+        System.out.println("test3() 메소드 실행~");
+
+        return "";
+    }
 
     //상품 목록 페이지
     @GetMapping("/list")
